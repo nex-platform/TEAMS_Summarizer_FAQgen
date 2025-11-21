@@ -32,6 +32,13 @@ frontend/*.docx
 !backend/template*.docx  # Keep template files
 !frontend/template*.docx  # Keep template files
 
+# Merged transcript files
+docs/context_merged_transcript_*.docx
+docs/context_merged_transcript_*.txt
+docs/merged_transcript_*.docx
+docs/transcript_summary_*
+
+
 # Jupyter Notebook
 .ipynb_checkpoints
 
