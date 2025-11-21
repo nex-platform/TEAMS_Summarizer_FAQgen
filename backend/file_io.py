@@ -11,8 +11,6 @@ import docx
 # import docx
 from docx import Document
 import re
-from docx.oxml import OxmlElement
-from docx.oxml.ns import qn
 from docx.oxml.table import CT_Tbl
 from docx.oxml.text.paragraph import CT_P
 from docx.table import Table

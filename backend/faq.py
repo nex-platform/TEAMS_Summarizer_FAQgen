@@ -9,7 +9,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import openai
 from typing import List, Dict, Optional
 from dotenv import load_dotenv
-from src.text_processing import _split_raw_into_chunks
+from backend.text_processing import _split_raw_into_chunks
 import ast
 
 from pathlib import Path

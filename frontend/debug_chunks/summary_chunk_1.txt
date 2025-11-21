@@ -1,0 +1,9 @@
+01:14:00 Praveen Shared the following in the chat: it's ab-02, not ap-07
+
+01:26:00 Chandhan ABC Shared the following in the chat: [IMAGE:temp_images\image_73.png]
+
+01:35:00 Neerav ABC Shared the following in the chat: obc-7111-sw01#sh crb ne X ------------------------- Device ID: UB-01111ab-45 Entry address(es): IP address: 111.XX.XXX.XX IPv6 address: AB12::7XX1:XXXXAAA:1AAA (link-local) Platform: ABCDE ABC-AB1111-A-B9, Capabilities: OOO Trans Interface: X, Port ID (outgoing port): QQQ Holdtime : 122 sec
+
+01:50:00 Aryan Shared the following in the chat: Issue resolved MIM Closed. Problem ticket - PRB001111
+
+[IMAGE:temp_images\image_73.png]

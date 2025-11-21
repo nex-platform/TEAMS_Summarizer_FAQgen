@@ -4,7 +4,7 @@
 import os
 import re
 from datetime import datetime
-from typing import Dict, List, Tuple, Optional
+from typing import Dict, List, Tuple
 from dotenv import load_dotenv
 from pathlib import Path
 import openai
@@ -13,18 +13,10 @@ import openai
 dotenv_path = Path(__file__).parent.parent / '.env'
 load_dotenv(dotenv_path=dotenv_path)
 from docx import Document
-from docx.document import Document as DocumentType
 from docx.oxml.table import CT_Tbl
 from docx.oxml.text.paragraph import CT_P
-from docx.table import _Cell, Table
+from docx.table import Table
 from docx.text.paragraph import Paragraph
-from docx.shared import Inches, Pt
-from docx.enum.text import WD_ALIGN_PARAGRAPH
-from docx.enum.style import WD_STYLE_TYPE
-import json
-import base64
-from io import BytesIO
-from PIL import Image
 
 class CompleteMergerWithPerfectExtraction:
     def __init__(self, api_key: str):

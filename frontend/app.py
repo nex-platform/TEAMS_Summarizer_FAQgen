@@ -6,6 +6,12 @@ Created on Fri Jun  6 15:18:14 2025
 import os
 import sys
 from pathlib import Path
+
+# Add project root to Python path
+project_root = str(Path(__file__).parent.parent)
+if project_root not in sys.path:
+    sys.path.append(project_root)
+
 from dotenv import load_dotenv
 
 # Load environment variables from .env file in the project root
@@ -40,28 +46,21 @@ if platform.system() == 'Windows':
 
 
 import streamlit as st
-import glob
-from PyPDF2 import PdfReader
 from docx import Document
-from docx.shared import Inches, Pt, RGBColor
-import numpy as np
+from docx.shared import Pt
 from docx.text.paragraph import Paragraph
-from docx.table import Table
 from docx.enum.text import WD_ALIGN_PARAGRAPH
-from file_io import (
+from backend.file_io import (
     load_text_from_docx,
-    save_text_to_docx,
-    ensure_file_exists,
     extract_images_from_paragraph,
     iter_block_items
 )
-from text_processing import clean_transcript, summarize_transcript, chunked_clean_and_summarize
-from text_processing import chunked_clean_and_summarize, _split_raw_into_chunks
-from aggregator import read_chunk_summaries, summarize_timeline, summarize_table, extract_single_markdown_table
-from openai_client import call_openai_chat
+from backend.text_processing import chunked_clean_and_summarize
+from backend.text_processing import _split_raw_into_chunks
+from backend.openai_client import call_openai_chat
 
 # Import the merge functionality
-from merge_chat_transcript import merge_chat_and_transcript, convert_chat_only
+from backend.merge_chat_transcript import merge_chat_and_transcript, convert_chat_only
 
 import pandas as pd
 from typing import List, Dict, Any
@@ -87,7 +86,7 @@ def replace_png_placeholder_fixed(match):
     
     img_path = img_path.strip()
     
-    print(f"DEBUG: Cleaned PNG image path: '{img_path}'")
+    # print(f"DEBUG: Cleaned PNG image path: '{img_path}'")
     
     if not img_path:
         return "[Invalid image path]"
@@ -105,12 +104,12 @@ def replace_png_placeholder_fixed(match):
         if not path.lower().endswith('.png'):
             path_variations.append(path + '.png')
     
-    print(f"DEBUG: Trying cleaned paths: {path_variations}")
+    # print(f"DEBUG: Trying cleaned paths: {path_variations}")
     
     for path in path_variations:
         try:
             if os.path.exists(path):
-                print(f"DEBUG: Found PNG at: {path}")
+                # print(f"DEBUG: Found PNG at: {path}")
                 # Read and encode PNG as base64
                 with open(path, "rb") as img_file:
                     img_data = img_file.read()
@@ -391,7 +390,6 @@ def extract_faqs(text: str, max_chunk_size: int = 4000) -> List[Dict[str, str]]:
         import traceback
         traceback.print_exc()
         return []
-        raise
 
 def _process_chunk_for_faqs(chunk: str) -> List[Dict[str, str]]:
     """
@@ -488,10 +486,10 @@ Text to analyze:
             return []
             
         # Print raw response for debugging
-        print(f"\n=== Raw response from OpenAI ===")
-        print(f"Response type: {type(response)}")
-        print(f"Response length: {len(response)} characters")
-        print(f"Response preview: {response[:200]}...")
+        # print(f"\n=== Raw response from OpenAI ===")
+        # print(f"Response type: {type(response)}")
+        # print(f"Response length: {len(response)} characters")
+        # print(f"Response preview: {response[:200]}...")
         
         # Remove any code block markers and trim whitespace
         cleaned_content = response.replace("```json", "").replace("```", "").strip()
@@ -505,7 +503,7 @@ Text to analyze:
         
         if json_start >= 0 and json_end > json_start:
             json_str = cleaned_content[json_start:json_end]
-            print(f"Extracted JSON string (length: {len(json_str)}): {json_str[:100]}...")
+            # print(f"Extracted JSON string (length: {len(json_str)}): {json_str[:100]}...")
             
             try:
                 # Try json.loads first
@@ -730,7 +728,7 @@ def extract_action_items(summary, max_chunk_size=3000):
 
 def _process_chunk_for_action_items(chunk):
     """Helper function to process a single chunk of text for action items"""
-    from openai_client import call_openai_chat
+    from backend.openai_client import call_openai_chat
     
     prompt = f"""Extract action items from the following meeting summary chunk.
     Return a JSON array of action items with this exact structure:
@@ -819,7 +817,7 @@ def extract_key_observations(summary, max_chunk_size=3000):
 
 def _process_chunk_for_observations(chunk):
     """Helper function to process a single chunk of text for observations"""
-    from openai_client import call_openai_chat
+    from backend.openai_client import call_openai_chat
     
     prompt = """Extract key observations, decisions, or important points from the following meeting summary chunk.
     Pay special attention to any mentions of P1, P2, or tickets as these are high priority.
