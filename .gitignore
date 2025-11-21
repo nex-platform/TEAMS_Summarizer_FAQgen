@@ -26,6 +26,12 @@ logs/
 *.log
 local_settings.py
 
+# Word documents
+backend/*.docx
+frontend/*.docx
+!backend/template*.docx  # Keep template files
+!frontend/template*.docx  # Keep template files
+
 # Jupyter Notebook
 .ipynb_checkpoints
 
