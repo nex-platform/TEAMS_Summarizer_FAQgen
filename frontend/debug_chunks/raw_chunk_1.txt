@@ -1,0 +1,5 @@
+The power seems to have been restored and ABC and GBS team are confirming Network stability. Awaiting confirmation from Local customers if network services have been restored. Praveen   1:14:00\nShared the following in the chat:\nit's ab-02, not ap-07
+Chandhan ABC   1:26:00\nShared the following in the chat:
+[IMAGE:temp_images\image_73.png]
+Neerav ABC   1:35:00\nShared the following in the chat:\nobc-7111-sw01#sh crb ne X\n-------------------------\nDevice ID: UB-01111ab-45\nEntry address(es):\nIP address: 111.XX.XXX.XX\nIPv6 address: AB12::7XX1:XXXXAAA:1AAA  (link-local)\nPlatform: ABCDE ABC-AB1111-A-B9,  Capabilities: OOO Trans\nInterface: X,  Port ID (outgoing port): QQQ\nHoldtime : 122 sec
+Aryan   1:50:00\nShared the following in the chat:\nIssue resolved MIM Closed. Problem ticket - PRB001111

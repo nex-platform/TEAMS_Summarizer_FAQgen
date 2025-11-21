@@ -5,8 +5,6 @@ Created on Fri Jun  6 15:17:13 2025
 @author: ShivakrishnaBoora
 """
 
-
-from typing import Any
 from typing import List, Generator
 import nltk
 import os
@@ -22,7 +20,7 @@ try:
 except LookupError:
     nltk.download('punkt_tab', quiet=True)
 
-from openai_client import call_openai_chat
+from backend.openai_client import call_openai_chat
 
 # Common prompt sections
 TIMESTAMP_FORMAT_RULES = (

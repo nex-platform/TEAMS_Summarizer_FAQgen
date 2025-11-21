@@ -22,7 +22,7 @@ A Streamlit application that transforms meeting transcripts and chat logs into s
    - Generates comprehensive meeting summaries
    - Creates structured FAQ documents
    - Produces action item trackers
-   - Exports to multiple formats (DOCX, PDF)
+   - Exports as an editable file for further human intervention
 
 ## Key Features
 

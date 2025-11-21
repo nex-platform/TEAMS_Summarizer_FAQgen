@@ -14,7 +14,17 @@ from dotenv import load_dotenv
 
 # Load environment variables from .env file in the project root
 dotenv_path = Path(__file__).parent.parent / '.env'
-load_dotenv(dotenv_path=dotenv_path)
+print(f"\n=== Loading .env from: {dotenv_path} ===")
+print(f"File exists: {dotenv_path.exists()}")
+
+# Load the .env file
+load_dotenv(dotenv_path=dotenv_path, override=True)
+
+# Debug print all environment variables (be careful with sensitive data in production)
+# print("\nEnvironment variables loaded:")
+# for key in ['OPENAI_API_KEY', 'OTHER_IMPORTANT_VAR']:  # Add other vars you want to check
+#     val = os.getenv(key)
+#     print(f"{key}: {'*' * 8 if val and key == 'OPENAI_API_KEY' else val}")
 
 def call_openai_chat(prompt: str, model: str = "gpt-4o") -> str:
     """
@@ -39,7 +49,7 @@ def call_openai_chat(prompt: str, model: str = "gpt-4o") -> str:
             max_tokens=2048,
         )
         
-        # # Debug print the raw response structure
+        # Debug print the raw response structure
         # print("\n=== Raw API Response ===")
         # print(f"Response type: {type(response)}")
         # print(f"Response object: {response}")

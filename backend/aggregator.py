@@ -9,9 +9,9 @@ Created on Mon Jun  9 15:14:48 2025
 import os
 from dotenv import load_dotenv
 from pathlib import Path
-from openai_client import call_openai_chat
-from file_io import save_text_to_docx
-from text_processing import chunked_clean_and_summarize
+from backend.openai_client import call_openai_chat
+from backend.file_io import save_text_to_docx
+from backend.text_processing import chunked_clean_and_summarize
 import re
 
 # Load environment variables from .env file in the project root

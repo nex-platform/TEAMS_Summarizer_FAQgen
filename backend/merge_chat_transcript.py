@@ -1,14 +1,9 @@
-import os
-from openai import OpenAI
 from docx import Document
 from docx.oxml.text.paragraph import CT_P
 from docx.text.paragraph import Paragraph
-from docx.shared import Inches
-from docx.oxml import parse_xml
-from docx.oxml.ns import nsdecls, qn
 from datetime import datetime, timedelta
 import re
-from typing import List, Tuple, Dict, Any, Optional
+from typing import List, Tuple, Optional
 import io
 from PIL import Image
 
