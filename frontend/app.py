@@ -5,6 +5,7 @@ Created on Fri Jun  6 15:18:14 2025
 
 import os
 import sys
+import traceback
 from pathlib import Path
 
 # Add project root to Python path
@@ -13,6 +14,16 @@ if project_root not in sys.path:
     sys.path.append(project_root)
 
 from dotenv import load_dotenv
+from backend.logger import setup_logger, logging
+
+# Initialize logger
+logger = setup_logger("StreamlitApp")
+logger.debug(f"Logger class: {logger.__class__.__name__}", extra={"status_code": 0})
+logger.success("Application running successfully", extra={"status_code": 200})
+
+# Load environment variables
+load_dotenv(Path(project_root) / '.env')
+logger.info('Environment variables loaded')
 
 # Load environment variables from .env file in the project root
 dotenv_path = Path(__file__).parent.parent / '.env'
@@ -27,6 +38,7 @@ from datetime import datetime, timedelta
 import base64
 import tempfile
 import nltk
+import logging
 
 # Download NLTK data if not already downloaded
 try:
@@ -1466,20 +1478,32 @@ def create_summary_document(action_items, observations, summary_text="", output_
     # Save the document
     doc.save(output_path)
     return output_path
+
+logger = logging.getLogger(__name__)
+
 def main():
     """
     Launch Streamlit app for transcript summarization.
     """
-    import re  # Add regex import for image processing
-    
-    # Set up the Streamlit page
-    st.set_page_config(layout="wide", page_title="Meeting Summarizer")
+    try:
+        logger.info('Starting Streamlit application')
+        # Set page config
+        st.set_page_config(
+            page_title="TEAMS Transcript Summarizer",
+            page_icon="📝",
+            layout="wide",
+            initial_sidebar_state="expanded"
+        )
+        logger.debug('Page configuration set')
+    except Exception as e:
+        logger.error(f"Error setting page configuration: {e}")
     
     # Initialize COM for the main thread if on Windows
     if platform.system() == 'Windows' and not hasattr(threading.current_thread(), "_com_initialized"):
         try:
             pythoncom.CoInitialize()
             threading.current_thread()._com_initialized = True
+            logger.debug('COM initialized for main thread')
         except Exception as e:
             st.warning(f"Warning: Could not initialize COM: {e}")
             if not hasattr(threading.current_thread(), "_com_initialized"):
@@ -2254,9 +2278,26 @@ def main():
 
 if __name__ == "__main__":
     try:
+        # Initialize logger with status code
+        logger = setup_logger('StreamlitApp')
+        # Log successful completion with status 200
+        logger.success('Application running successfully', extra={'status_code': 200})
+        
+        # Run main application
         main()
+        
+    except Exception as e:
+        # Log error with 500 status code
+        error_msg = f'Unhandled exception: {str(e)}'
+        logger.critical(error_msg, exc_info=True, extra={'status_code': 500})
+        if 'st' in globals():
+            st.error('An unexpected error occurred. Please check the application logs for more details.')
+            
     finally:
-        # Clean up COM if it was initialized in this thread
-        if hasattr(threading.current_thread(), "_com_initialized"):
-            pythoncom.CoUninitialize()
-            delattr(threading.current_thread(), "_com_initialized")
+        # Clean up COM if it was initialized
+        if platform.system() == 'Windows' and hasattr(threading.current_thread(), "_com_initialized"):
+            try:
+                pythoncom.CoUninitialize()
+                logger.debug('COM uninitialized', extra={'status_code': 200})
+            except Exception as e:
+                logger.error(f'Error during COM uninitialization: {e}', extra={'status_code': 500})
