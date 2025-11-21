@@ -1486,7 +1486,7 @@ def main():
     Launch Streamlit app for transcript summarization.
     """
     try:
-        logger.info('Starting Streamlit application')
+        logger.info('Running Streamlit application')
         # Set page config
         st.set_page_config(
             page_title="TEAMS Transcript Summarizer",
